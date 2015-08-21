@@ -10,31 +10,31 @@ type TaipeiCompany struct {
 }
 
 type Profile struct {
-	代表人姓名    string `json:"代表人姓名"`
-	公司名稱     string `json:"公司名稱"`
-	公司所在地    string `json:"公司所在地"`
-	公司狀況     string `json:"公司狀況"`
-	實收資本額_元_ string `json:"實收資本額(元)"`
-	//		所營事業資料   [][]string `json:"所營事業資料"`
-	最後核准變更日期 struct {
+	Ceo     string `json:"代表人姓名"`
+	Company string `json:"公司名稱"`
+	Address string `json:"公司所在地"`
+	Status  string `json:"公司狀況"`
+	RealCap string `json:"實收資本額(元)"`
+	//Metadata         [][]string `json:"所營事業資料"`
+	LastApprovedDate struct {
 		Day   int `json:"day"`
 		Month int `json:"month"`
 		Year  int `json:"year"`
 	} `json:"最後核准變更日期"`
-	核准設立日期 struct {
+	ApprovedDate struct {
 		Day   int `json:"day"`
 		Month int `json:"month"`
 		Year  int `json:"year"`
 	} `json:"核准設立日期"`
-	登記機關  string        `json:"登記機關"`
-	經理人名單 []interface{} `json:"經理人名單"`
-	股權狀況  string        `json:"股權狀況"`
-	董監事名單 []struct {
-		出資額   string `json:"出資額"`
-		姓名    string `json:"姓名"`
-		序號    string `json:"序號"`
-		所代表法人 string `json:"所代表法人"`
-		職稱    string `json:"職稱"`
+	Gov string `json:"登記機關"`
+	//ManagerList []interface{} `json:"經理人名單"`
+	StockStatus string `json:"股權狀況"`
+	BoardList   []struct {
+		Invest   string `json:"出資額"`
+		Name     string `json:"姓名"`
+		SerialId string `json:"序號"`
+		Rep      string `json:"所代表法人"`
+		Title    string `json:"職稱"`
 	} `json:"董監事名單"`
-	資本總額_元_ string `json:"資本總額(元)"`
+	TotalCap string `json:"資本總額(元)"`
 }
