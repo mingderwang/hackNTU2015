@@ -1,0 +1,11 @@
+1. main.go should be generate from go generate too.
+2. Status should remove.
+3. app.yml is not correct
+
+known bugs:
+1. not support NULL in json, (JSON-to-GO) will convert it to interface{}
+2. not support time.Time in json.
+3. dataschema with sub type structure, no data when get with id
+4. sub-structure data
+5. no profile_type, add ->  db.AutoMigrate(&ProfileType{})
+
