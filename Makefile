@@ -1,7 +1,8 @@
 .PHONY: all clean
 
-all: dataSchema.go 
-
+all: TaipeiCompany.go 
+	@go generate
+	@go build
 
 clean:
 	@go clean
