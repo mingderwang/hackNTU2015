@@ -8,4 +8,5 @@ known bugs:
 3. dataschema with sub type structure, no data when get with id
 4. sub-structure data
 5. no profile_type, add ->  db.AutoMigrate(&ProfileType{})
+6. migrate not support [][]
 
