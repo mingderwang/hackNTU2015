@@ -4,8 +4,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/itsjamie/gin-cors"
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
+	"time"
 )
 
 type Config struct {
@@ -48,6 +50,16 @@ func (s *TaipeiCityService) Run(cfg Config) error {
 
 	r := gin.Default()
 	//gin.SetMode(gin.ReleaseMode)
+	// Apply the middleware to the router (works with groups too)
+	r.Use(cors.Middleware(cors.Config{
+		Origins:         "*",
+		Methods:         "GET, PUT, POST, DELETE",
+		RequestHeaders:  "Origin, Authorization, Content-Type",
+		ExposedHeaders:  "",
+		MaxAge:          50 * time.Second,
+		Credentials:     true,
+		ValidateHeaders: false,
+	}))
 
 	r.GET("/taipeiCity", taipeiCityResource.GetAllTaipeiCitys)
 	r.GET("/taipeiCity/:id", taipeiCityResource.GetTaipeiCity)
