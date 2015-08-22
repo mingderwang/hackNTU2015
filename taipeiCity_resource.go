@@ -11,7 +11,6 @@ import (
 	"time"
 )
 
-
 type TaipeiCityResource struct {
 	db gorm.DB
 }
@@ -49,13 +48,33 @@ func (tr *TaipeiCityResource) GetAllTaipeiCitys(c *gin.Context) {
 func (tr *TaipeiCityResource) GetTaipeiCity(c *gin.Context) {
 	id, err := tr.getId(c)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "problem decoding id sent"})
-		return
+		if id == 0 {
+			tr.GetTaipeiCityByAddress(c)
+			return
+		} else {
+			c.JSON(http.StatusBadRequest, gin.H{"message": "problem decoding id sent"})
+			return
+		}
 	}
 
 	var taipeiCity TaipeiCity
 
 	if tr.db.First(&taipeiCity, id).RecordNotFound() {
+		c.JSON(http.StatusNotFound, gin.H{"message": "not found"})
+	} else {
+		c.JSON(http.StatusOK, taipeiCity)
+	}
+}
+
+func (tr *TaipeiCityResource) GetTaipeiCityByAddress(c *gin.Context) {
+	address, err := tr.getAddress(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "problem decoding address sent"})
+		return
+	}
+	fmt.Println(address)
+	var taipeiCity TaipeiCity
+	if tr.db.Where("address = ?", address).First(&taipeiCity).RecordNotFound() {
 		c.JSON(http.StatusNotFound, gin.H{"message": "not found"})
 	} else {
 		c.JSON(http.StatusOK, taipeiCity)
@@ -137,6 +156,11 @@ func (tr *TaipeiCityResource) DeleteTaipeiCity(c *gin.Context) {
 	}
 }
 
+func (tr *TaipeiCityResource) getAddress(c *gin.Context) (string, error) {
+	addressStr := c.Params.ByName("id")
+	return addressStr, nil
+}
+
 func (tr *TaipeiCityResource) getId(c *gin.Context) (int32, error) {
 	idStr := c.Params.ByName("id")
 	id, err := strconv.Atoi(idStr)
@@ -160,4 +184,3 @@ type Patch struct {
 	Path  string `json:"path"`
 	Value string `json:"value"`
 }
-

@@ -18,7 +18,6 @@ type Config struct {
 	Url        string
 }
 
-
 type TaipeiCityService struct {
 }
 
@@ -52,6 +51,7 @@ func (s *TaipeiCityService) Run(cfg Config) error {
 
 	r.GET("/taipeiCity", taipeiCityResource.GetAllTaipeiCitys)
 	r.GET("/taipeiCity/:id", taipeiCityResource.GetTaipeiCity)
+	//	r.GET("/taipeiCity/:address", taipeiCityResource.GetTaipeiCityByAddress)
 	r.POST("/taipeiCity", taipeiCityResource.CreateTaipeiCity)
 	r.PUT("/taipeiCity/:id", taipeiCityResource.UpdateTaipeiCity)
 	r.PATCH("/taipeiCity/:id", taipeiCityResource.PatchTaipeiCity)
@@ -61,4 +61,3 @@ func (s *TaipeiCityService) Run(cfg Config) error {
 
 	return nil
 }
-
